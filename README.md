@@ -1,2 +1,2 @@
 # Lab_UI_MVVM
-Wpf Lab2_Graphics using MVVM
+WPF Lab2_Graphics using MVVM
