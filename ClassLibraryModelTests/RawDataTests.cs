@@ -17,7 +17,11 @@ namespace ClassLibraryModelTests
         {
             RawData uniformRawData = new RawData(0, 10, 6, true, CreationFunctions.ThreePolynomFunc);
             double[] unGridNodes = new double[6] { 0, 2, 4, 6, 8, 10 };
-            double[] unGridValues = new double[6] { 0, 8, 64, 216, 512, 1000 };
+            double[] unGridValues = new double[6];
+            for (int i = 0; i < unGridNodes.Length; i++)
+            {
+                unGridValues[i] = unGridNodes[i] * unGridNodes[i] * unGridNodes[i];
+            }
             Assert.Equal(0, uniformRawData.LeftBound, 4);
             Assert.Equal(10, uniformRawData.RightBound, 4);
             Assert.Equal(6, uniformRawData.NumOfNodes);
@@ -28,13 +32,19 @@ namespace ClassLibraryModelTests
         [Fact]
         public void CreateNonUniformRawDataTest()
         {
-            RawData uniformRawData = new RawData(0, 10, 6, false, CreationFunctions.ThreePolynomFunc);
-            Assert.Equal(0, uniformRawData.LeftBound, 4);
-            Assert.Equal(10, uniformRawData.RightBound, 4);
-            Assert.Equal(6, uniformRawData.NumOfNodes);
-            Assert.False(uniformRawData.IsUniformGrid);
-            Assert.True(uniformRawData.Nodes.All(a => a >= 0 && a <= 10));
-            Assert.True(uniformRawData.Values.All(a => a >= 0 && a <= 1000));
+            RawData nonUniformRawData = new RawData(0, 10, 6, false, CreationFunctions.ThreePolynomFunc);
+            Assert.Equal(0, nonUniformRawData.LeftBound, 4);
+            Assert.Equal(10, nonUniformRawData.RightBound, 4);
+            Assert.Equal(6, nonUniformRawData.NumOfNodes);
+            Assert.False(nonUniformRawData.IsUniformGrid);
+            Assert.True(nonUniformRawData.Nodes.All(a => a >= 0 && a <= 10));
+            Assert.True(nonUniformRawData.Values.All(a => a >= 0 && a <= 1000));
+            double[] nuGridValues = new double[6];
+            for (int i = 0; i < nonUniformRawData.Nodes.Length; i++)
+            {
+                nuGridValues[i] = nonUniformRawData.Nodes[i] * nonUniformRawData.Nodes[i] * nonUniformRawData.Nodes[i];
+            }
+            Assert.Equal(nuGridValues, nonUniformRawData.Values);
         }
         [Fact]
         public void LoadRawDataFromCorrectFileTest()

@@ -45,7 +45,7 @@ namespace ViewModel
         {
             try
             {
-                loadFromControls();
+                LoadFromControls();
                 string filename = fileDialog.SaveFileDialog();
                 if (!string.IsNullOrEmpty(filename))
                 {
@@ -66,10 +66,10 @@ namespace ViewModel
         {
             try
             {
-                loadFromControls();
-                int result = computeSpline();
+                LoadFromControls();
+                int result = ComputeSpline();
                 splineIntegral = splineData.Integral.ToString();
-                drawSpline();
+                DrawSpline();
                 RaisePropertyChanged("rawData");
                 RaisePropertyChanged("splineData");
                 RaisePropertyChanged("splineIntegral");
@@ -91,7 +91,7 @@ namespace ViewModel
                 string filename = fileDialog.OpenFileDialog();
                 if (!string.IsNullOrEmpty(filename))
                 {
-                    loadFromFile(filename);
+                    LoadFromFile(filename);
                     RaisePropertyChanged("leftBound");
                     RaisePropertyChanged("rightBound");
                     RaisePropertyChanged("rawNumOfNodes");
@@ -114,9 +114,9 @@ namespace ViewModel
 
         private void ComputeSplineCommandHandler()
         {
-            int result = computeSpline();
+            int result = ComputeSpline();
             splineIntegral = splineData.Integral.ToString();
-            drawSpline();
+            DrawSpline();
             RaisePropertyChanged("rawData");
             RaisePropertyChanged("splineData");
             RaisePropertyChanged("splineIntegral");
@@ -126,7 +126,7 @@ namespace ViewModel
         {
             return (string.IsNullOrEmpty(this["leftBound"]) && string.IsNullOrEmpty(this["rightBound"]) && string.IsNullOrEmpty(this["rawNumOfNodes"]) && string.IsNullOrEmpty(this["SplineNumOfNodes"])) && (rawData != null);
         }
-        private void drawSpline()
+        private void DrawSpline()
         {
             try
             {
@@ -138,7 +138,7 @@ namespace ViewModel
                 throw new Exception($"Ошибка отрисовки сплайна\n" + ex.Message);
             }
         }
-        private void loadFromControls()
+        private void LoadFromControls()
         {
             try
             {
@@ -150,7 +150,7 @@ namespace ViewModel
                 throw new Exception("Неправильный формат ввода!");
             }
         }
-        private void loadFromFile(string filename)
+        private void LoadFromFile(string filename)
         {
             try
             {
@@ -166,7 +166,7 @@ namespace ViewModel
                 throw;
             }
         }
-        private int computeSpline()
+        private int ComputeSpline()
         {
             try
             {
